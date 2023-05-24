@@ -10,6 +10,6 @@ spec: #specifications for our object
     - containerPort: 80 #the port of the container within the pod
 
 
-    kubectl apply -f [manifest file].yml
-kubectl get pods
-kubectl describe pod [pod name]
+#kubectl apply -f 1pod.yml
+#kubectl get pods
+#kubectl describe pod [pod name]
