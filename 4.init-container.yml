@@ -13,7 +13,7 @@ spec:
       
   initContainers:
   - name: my-pre-check-container
-    image: busybos
+    image: busybox
    
     volumeMounts:
     - name: workdir
@@ -25,3 +25,9 @@ spec:
   volumes:
   - name: workdir
     emptyDir: {}
+
+# kubectl apply -f 4.init-container.yml
+# kubectl get pods
+# kubectl get pods -o wide
+# get the ip check via browser curl://contIP
+# kubectl delete -f 4.init-container 
