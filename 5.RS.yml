@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: replicasetdemo
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      segment: business
+  template:
+    metadata:
+      labels:
+        segment: business
+    spec:
+      containers:
+      - name: web-server
+        image: nginx:1.20
