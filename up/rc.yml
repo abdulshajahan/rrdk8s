@@ -19,17 +19,17 @@ spec:
             - containerPort: 80
 
 
-kubectl create -f rc.yml
+#kubectl create -f rc.yml
 
-kubectl get pods
+#kubectl get pods
 
-kubectl get po -l app=nginx-app
+#kubectl get po -l app=nginx-app
 
-kubectl describe rc nginx-rc
+#kubectl describe rc nginx-rc
 
 
-kubectl scale rc nginx-rc --replicas=5
+#kubectl scale rc nginx-rc --replicas=5
 
-kubectl get pods -l app=nginx-app -o wide
+#kubectl get pods -l app=nginx-app -o wide
 
-kubectl delete -f rc.yml
+#kubectl delete -f rc.yml
