@@ -17,18 +17,19 @@ spec: #specifications for our object
       containers:
       - name: nginx-container #the name of the container within the pod
         image: nginx:1.14.2 #which container image should be pulled
+      # image: nginxdemos/hello:plain-text
         ports:
         - containerPort: 80 #the port of the container within the pod
 
-           kubectl create -f deploy.yml --record
+    #       kubectl create -f deploy.yml --record
 
-           kubectl get deploy -l app=nginx-app
+   #        kubectl get deploy -l app=nginx-app
 
-           kubectl get rs -l app=nginx-app
+  #         kubectl get rs -l app=nginx-app
 
-           kubectl get po -l app=nginx-app
+ #          kubectl get po -l app=nginx-app
 
-           kubectl describe deploy nginx-deploy
+#           kubectl describe deploy nginx-deploy
 
          
 
