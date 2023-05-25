@@ -21,19 +21,31 @@ spec: #specifications for our object
         ports:
         - containerPort: 80 #the port of the container within the pod
 
-    #       kubectl create -f deploy.yml --record
+# kubectl apply -f deploy.yaml 
 
-   #        kubectl get deploy -l app=nginx-app
+# kubectl set image deployment/nginx-deployment nginx-container=nginx:1.16.1 --record
 
-  #         kubectl get rs -l app=nginx-app
+# kubectl rollout status deployment/nginx-deployment
 
- #          kubectl get po -l app=nginx-app
+#kubectl describe deploy
 
-#           kubectl describe deploy nginx-deploy
+#RollOut
+# kubectl set image deployment/nginx-deployment nginx-container=nginx:1.168 --record
 
-         
+# kubectl get rs
+
+#Rollback revision view
+# kubectl rollout history deployment/nginx-deployment
+
+#kubectl rollout history deployment/nginx-deployment --revision=2
+
+# kubectl rollout undo deployment/nginx-deployment
+
+# kubectl rollout undo deployment/nginx-deployment --to-revision=2
+
+##Scaling deployments
+# kubectl scale deployment/nginx-deployment --replicas=10
 
 
 
-
-
+# kubectl set image deployment/nginx-deployment nginx-container=nginx:nothere --record

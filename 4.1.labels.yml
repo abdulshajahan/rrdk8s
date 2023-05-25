@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp
+  labels:
+    name: myapp
+    dept: it
+    location: chennai
+spec:
+  containers:
+  - name: myapp
+    image: nginx
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    #ports:
+    #  - containerPort: <Port>
+
+
+#kubectl run n1 --image nginx -l env=production
+ #kubectl get pods --show-labels
+ #kubectl label pods n1 dept=it
+  # kubectl apply -f labels.yml 
+  #  kubectl get pods --show-labels
+  #  kubectl get pods -l dept=it
+  #  kubectl get pods -l env=production
+
+  #apply multiple labels
+  #kubectl label pods n1 {env=dev, dept=sales}

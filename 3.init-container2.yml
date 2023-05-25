@@ -22,4 +22,4 @@ spec:
 
 ###kubectl apply -f 4.init-container2.yml
 ### kubectl get pod init-container -o wide
-##https://foxutech.com/sidecar-containers-and-init-containers-in-kubernetes/
+
