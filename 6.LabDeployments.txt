@@ -52,7 +52,7 @@ node.
 # kubectl get rs
 
 1.15 Let us expose the deployment to the service to access the application
-# kubectl expose deployment web-server --name demo-service --type ClusterIP --labels app=nginx --port 80
+# kubectl expose deployment nginx-deploymnet --name demo-service --type ClusterIP --labels app=nginx --port 80
 1.16 Let us list the service, by executing the below command.
 # kubectl get svc demo-service
 1.17 Let us access the application using the cluster-ip, by executing the below command.

@@ -16,8 +16,8 @@ spec: #specifications for our object
     spec:
       containers:
       - name: nginx-container #the name of the container within the pod
-        image: nginx:1.14.2 #which container image should be pulled
-      # image: nginxdemos/hello:plain-text
+      # image: nginx:1.14.2 #which container image should be pulled
+        image: nginxdemos/hello:plain-text
         ports:
         - containerPort: 80 #the port of the container within the pod
 
