@@ -5,6 +5,11 @@ metadata: #information about our object we're deploying
   labels: #A tag on the deployments created
     app: nginx
 spec: #specifications for our object
+#  strategy:
+#    type: RollingUpdate
+#    rollingUpdate:
+#      maxSurge: 1
+#      maxUnavailable: 1
   replicas: 5 #The number of pods that should always be running
   selector: #which pods the replica set should be responsible for
     matchLabels:
