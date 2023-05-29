@@ -24,13 +24,16 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ingress-nginx
+  name: my-service
 spec:
-  type: ClusterIP
-  ports: 
-  - name: http
-    port: 80
-    targetPort: 80
-    protocol: TCP
+  type: NodePort
   selector:
     app: nginx
+  ports:
+      # By default and for convenience, the `targetPort` is set to the same value as the `port` field.
+    - port: 80 #kube service port no
+      targetPort: 80 #pods port number
+      # Optional field
+      # By default and for convenience, the Kubernetes control plane will allocate a port 
+      # from a range (default: 30000-32767)
+      # nodePort: 30007

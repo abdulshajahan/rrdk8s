@@ -37,7 +37,7 @@ spec:
 #kubectl apply -f apache.yml
 
 #install metrics server 
-#kubectl apply -f 10.33metricsserver.yml
+#kubectl apply -f 10.3.1metricsserver.yml
 #If you install from directly github follow the below steps
 #kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 #kubectl -n kube-system get pods
