@@ -46,7 +46,7 @@ kind: Deployment
 metadata:
   name: azure-vote-front
 spec:
-  replicas: 1
+  replicas: 10
   selector:
     matchLabels:
       app: azure-vote-front
@@ -83,3 +83,5 @@ spec:
   - port: 80
   selector:
     app: azure-vote-front
+
+    #kubectl apply -f 9.multitierapp.yml

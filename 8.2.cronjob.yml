@@ -21,7 +21,7 @@ spec:
 
 
 # kubectl get all
-# kubectl apply -f 8.cronjob.yml
+# kubectl apply -f 8.2cronjob.yml
 # kubectl get all
 # kubectl get cronjob hello
 # kubectl get jobs --watch
