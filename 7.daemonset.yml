@@ -18,3 +18,13 @@ spec:
         image: prom/node-exporter
         ports:
         - containerPort: 80
+
+
+# kubectl get all
+# kubectl apply -f 7.daemonset.yml 
+# kubectl get all
+# kubectl get pods -o wide
+# kubectl describe pod prometheus-daemonset-cslxk
+# curl http://172.16.229.204:9100/metrics
+# kubectl delete -f 7.daemonset.yml 
+# https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
