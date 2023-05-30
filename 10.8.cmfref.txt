@@ -1,0 +1,3 @@
+kubectl describe deployment.apps/nginx-deployment
+kubectl describe replicaset nginx-deployment-b4c8bfb9b
+kubectl describe pod nginx-deployment-b4c8bfb9b-mllgh

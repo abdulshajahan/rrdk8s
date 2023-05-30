@@ -3,7 +3,7 @@ kind: Deployment #What kind of object we're deploying
 metadata: #information about our object we're deploying
   name: nginx-deployment #Name of the deployment
   labels: #A tag on the deployments created
-    app: nginx
+    app: nginxapp
 spec: #specifications for our object
   replicas: 2 #The number of pods that should always be running
   selector: #which pods the replica set should be responsible for
@@ -16,28 +16,11 @@ spec: #specifications for our object
     spec:
       containers:
       - name: nginx-container #the name of the container within the pod
-        image: nginxdemos/hello #which container image should be pulled
+        image: nginxdemos/nginx-hello:plain-text #which container image should be pulled
         #image: nginxdemos/hello:plain-text #which container image should be pulled
         ports:
         - containerPort: 80 #the port of the container within the pod
 
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: myservice
-spec:
-#  selector:
- #   app: myapps
-  ports:
-  - port: 8090 # reach the pod service
-    targetPort: 80 #container port app service provided
-
 #kubectl get all
 #kubectl apply -f 11.0service.yml
 #kubectl get all
-#kubectl describe service/myservice
-#observe endpoints
-
-
-

@@ -25,8 +25,7 @@ kubectl logs --previous <pod_name>
 kubectl logs <pod_name> --all-containers
 
 Node Logging =====================================
-default path log container logs /var/log/containers
-
+default path log container logs /var/log/containers (docker)
 
 ==========================================================
 

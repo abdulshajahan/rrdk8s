@@ -1,6 +1,7 @@
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
+  creationTimestamp: null
   name: php-apache
 spec:
   maxReplicas: 10
@@ -10,3 +11,4 @@ spec:
     kind: Deployment
     name: php-apache
   targetCPUUtilizationPercentage: 50
+
