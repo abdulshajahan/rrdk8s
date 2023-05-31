@@ -1,0 +1,24 @@
+# https://kubernetes.io/docs/concepts/workloads/pods/
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "myapp"
+  namespace: default
+  labels:
+    app: "myapp"
+spec:
+  containers:
+  - name: myapp
+    image: "nginx"
+    ports:
+    - containerPort: 80
+      name:  http
+    volumeMounts:
+    - name: weblocation
+      mountPath: /usr/share/nginx/html
+  volumes:
+    - name: webpath
+      hostPath:
+        path: /root/kvol
+  restartPolicy: Never
+---
