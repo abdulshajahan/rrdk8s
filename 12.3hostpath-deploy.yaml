@@ -1,0 +1,46 @@
+apiVersion: apps/v1 #version of the API to use
+kind: Deployment #What kind of object we're deploying
+metadata: #information about our object we're deploying
+  name: nginx-deployment #Name of the deployment
+  labels: #A tag on the deployments created
+    app: nginx
+spec: #specifications for our object
+  strategy:
+  replicas: 5 #The number of pods that should always be running
+  selector: #which pods the replica set should be responsible for
+    matchLabels:
+      app: nginx #any pods with labels matching this I'm responsible for.
+  template: #The pod template that gets deployed
+    metadata:
+      labels: #A tag on the replica sets created
+        app: nginx
+    spec:
+      containers:
+      - name: nginx-container #the name of the container within the pod
+        image: nginx:1.14.2 #which container image should be pulled
+      # image: nginxdemos/hello:plain-text
+        ports:
+        - containerPort: 80 #the port of the container within the pod
+        volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: test-hostpath
+      volumes:
+      - name: test-hostpath
+        hostPath:
+          path: /data
+          type: DirectoryOrCreate
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cluster-nginx
+spec:
+  type: ClusterIP
+  ports: 
+  - name: http
+    port: 80
+    targetPort: 80
+    protocol: TCP
+  selector:
+    app: nginx

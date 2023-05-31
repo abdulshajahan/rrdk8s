@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: hostpth
+  name: hostpathpod
 spec:
   containers:
   - image: nginx
-    name: test-container
+    name: nginxcon
     volumeMounts:
         - mountPath: "/usr/share/nginx/html"
           name: test-hostpath
