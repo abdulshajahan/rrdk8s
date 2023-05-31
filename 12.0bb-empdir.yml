@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: bb-empdirpod
+spec:
+  containers:
+  - image: busybox
+    name: bbempcontainer
+    command:
+      - sleep
+      - "3600"
+    volumeMounts:
+    - mountPath: /myempdir
+      name: scratch-volume
+  volumes:
+  - name: scratch-volume
+    emptyDir: {}
+
+#-----single container empty dir mapping----
+# kubectl apply -f bb-empdir.yml
+# kubectl get pods
+# kubectl exec -it bb-empdirpod -- sh
+# ls -l observe /myempdir present
+# exit
+# kubectl delete -f bb-empdir.yml
