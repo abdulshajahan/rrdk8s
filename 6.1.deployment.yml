@@ -6,7 +6,6 @@ metadata: #information about our object we're deploying
     app: nginx
 spec: #specifications for our object
   strategy:
-
   replicas: 10 #The number of pods that should always be running
   selector: #which pods the replica set should be responsible for
     matchLabels:

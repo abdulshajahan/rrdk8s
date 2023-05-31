@@ -1,0 +1,3 @@
+cat > /etc/exports <<EOF
+/srv/nfs/kubedata *(rw,sync,no_root_squash,insecure)
+EOF
