@@ -1,0 +1,47 @@
+single container empty dir mapping
+___________________________________
+$ kubectl apply -f busybox-emptyDir.yml 
+pod/busybox created
+$ kubectl get pods
+NAME      READY   STATUS    RESTARTS   AGE
+busybox   1/1     Running   0          9s
+$ kubectl exec -it busybox -- sh
+/ # df -h /scratch
+Filesystem                Size      Used Available Use% Mounted on
+/dev/mapper/rhel-var     60.0G      2.5G     57.5G   4% /scratch
+/ # exit
+$ kubectl delete -f busybox-emptyDir.yml 
+pod "busybox" deleted
+
+
+multicontainer shared volume mapping
+____________________________
+$ kubectl apply -f busybox-sharedVolume.yml
+pod/busybox created 
+$ kubectl get pods
+NAME      READY   STATUS    RESTARTS   AGE
+busybox   2/2     Running   0          16s
+$ kubectl exec -it busybox -c box -- touch /box/foobar
+$ kubectl exec -it busybox -c busy -- ls /busy/
+foobar
+$ kubectl delete -f busybox-sharedVolume.yml
+pod "busybox" deleted
+
+
+pod mounted with host volume
+____________________________
+mkdir /root/kvol
+echo "web page in nginx mounted from HST filesystem" >/root/kvol/index.html
+
+kubectl apply -f vol.yml
+kubectl get pods -o wide
+notedown ip address of myapp
+curl http://myapp_ip
+
+pods logs view
+_______________________
+vim debug-counter.yml
+kubectl apply -f debug-counter.yml
+kubectl get pods -o wide
+kubectl describe pods counter
+kubectl logs counter -f

@@ -1,0 +1,159 @@
+https://linuxdady.com/kubernetes-persistent-volumes/
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mypv
+spec:
+  capacity:
+    storage: {2:<Size>}
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: slow
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    path: /tmp
+    server: 172.17.0.2
+
+
+NFS Server setup
+yum install nfs-utils -y
+setenforce 0
+sed -i --follow-symlinks 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/Selinux
+
+#Now start and enable NFS services on boot time.
+systemctl start nfs-server
+systemctl enable nfs-server
+systemctl status nfs-server
+
+#Create directory and give proper permission accordingly on directory that you want to share.
+mkdir -p /export/vol1
+chmod -R 777 /export/vol1/
+
+#Now open configuration file of NFS server and do below changes.
+
+vim /etc/exports
+
+#Now enter below entry into above location and save the file.
+
+/export/vol1 *(no_root_squash,rw,sync)
+
+exportfs -r
+systemctl restart nfs-server
+# Our NFS server has been configured. Now we are going to create PV.
+
+# PV setup by yaml file
+
+# Go to Kubernetes master server and make volume mount yml file like below. But before doing this be friendly with access mode. In term of Kubernetes persistent volumes,  we have mainly three mode of access.
+
+# ReadWriteOnce – The volume can be mounted as read-write by a single node. We use it in single write mode operation like SQL database means we can not increase replica if we make deployment in ReadWriteOnce mode because this mode allows to mount NFS volume on single instance at a time in write mode. So in simple language we can say we can do changes only from one node. 
+# ReadOnlyMany – The volume can be mounted read-only by many nodes Means suppose we want only to browse our request like suppose we need a containers of apache server. Then this mode comes in scenario.
+# ReadWriteMany – The volume can be mounted as read-write by many nodes means we can write at a time from many nodes like data warehouse, Hadoop etc. in such kind of database anyone can perform write operation from any node.
+# Kubernetes Persistent Volumes Reclaim Policy 
+#         We should be aware about Kubernetes persistent volumes reclaim policy because these policies play very important role. There are mainly two type of reclaim policy.
+
+# Recycle :- The drawback of using recycle policy is suppose our pvc ( persistence volume claim ) has been deleted then our data also will delete from PV (persistence volume) means from hard disk permanently.
+
+# Retain :- This is opposite case of recycle means suppose our pvc, project, namespace  has been deleted then there will be no effect on our data. Our data will remain save into the backend in PV.
+
+# So, it’s depended on our requirement which type of policy we are using. Because in recycle policy space will be available for next deployment no need to delete manually. Similarly, in case of retain policy data safety is on high priority. That’s why I am saying use according to requirement.
+
+# I  think it will become clear about access mode and policy or Kubernetes persistence volume. If it became clear, follow below step to create PV and change value accordingly like name, storage, access mode, reclaim policy, server ip etc. according to requirement.                                        
+
+
+1
+vim volume.yml
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv1
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: slow
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    path: /export/vol1
+    server: 10.0.2.213
+
+
+kubectl create -f volume.yml
+kubectl get pv
+
+
+# PVC setup by yaml file
+# Our PV has been created now let’s create PVC and pass its reference over the deployment. Means new pod will use PVC reference instead of PV directly. So, Let’s write yml file for PVC above we have written for PV. For better understanding compare it with LVM concept.
+
+vim PVC.yml
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: myclaim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: slow
+
+kubectl create -f PVC.yml
+kubectl get pvc
+
+# How to mount Kubernetes persistent volumes?
+# Now take example how to mount PVC or Kubernetes persistent volumes with Pod. Here I am taking example of database. Means I will deploy mysql db pod and then I will mount NFS volume with that pod.
+
+vim mysql.yml
+
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: wordpress-mysql
+  labels:
+    app: wordpress
+spec:
+  selector:
+    matchLabels:
+      app: wordpress
+      tier: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: wordpress
+        tier: mysql
+    spec:
+      containers:
+      - image: mysql:5.6
+        name: mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: redhat
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: myclaim
+
+          kubectl create -f mysql.yml
+kubectl get pod
+
