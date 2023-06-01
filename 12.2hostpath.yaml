@@ -12,5 +12,5 @@ spec:
   volumes:
   - name: test-hostpath
     hostPath:
-      path: /data
+      path: /webdata
       type: DirectoryOrCreate

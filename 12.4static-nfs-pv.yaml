@@ -4,10 +4,10 @@ metadata:
   name: pv-static-nfs
 spec:
   capacity:
-    storage: 5Gi
+    storage: 2Gi
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Recycle
   nfs:
-    path: /srv/nfs/kubedata
-    server: 10.3.0.4
+    path: /srv/nfs/appdata
+    server: 10.0.31.1

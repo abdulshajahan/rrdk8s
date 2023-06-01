@@ -23,13 +23,11 @@ spec: #specifications for our object
         - containerPort: 80 #the port of the container within the pod
         volumeMounts:
         - mountPath: "/usr/share/nginx/html"
-          name: test-hostpath
+          name: mypd
       volumes:
-      - name: test-hostpath
-        hostPath:
-          path: /rrddata
-          type: DirectoryOrCreate
-
+        - name: mypd
+          persistentVolumeClaim:
+            claimName: nfs-static-claim1
 ---
 apiVersion: v1
 kind: Service

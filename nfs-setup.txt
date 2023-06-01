@@ -1,3 +1,19 @@
+1. install nfs Service
+dnf install nfs-utils
+
+2. enable service auto start on reboots
+systemctl enable --now nfs-server
+
+3. check current status
+systemctl status nfs-server
+
+4. create a new for application appdat
+mkdir -p /srv/nfs/appdata
+
+5. make appdata dir sharable using nfs service
 cat > /etc/exports <<EOF
 /srv/nfs/kubedata *(rw,sync,no_root_squash,insecure)
 EOF
+
+6. verify appdata expoterd
+exportfs -v
