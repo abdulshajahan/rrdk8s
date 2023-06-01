@@ -1,0 +1,29 @@
+# kubectl get svc web-service
+# CLUSTER_IP=$(kubectl get svc web-service -o jsonpath='{.spec.clusterIP}')
+# echo $CLUSTER_IP
+
+# curl -v -s $CLUSTER_IP 2>&1 | head -n 10
+
+# POD=$( kubectl get pod | grep web-app | awk '{print $1}' | head -1)
+# kubectl exec $POD -- bash -c 'find /proc -mindepth 2 -maxdepth 2 -name exe -exec ls -lh {} \; 2>/dev/null'
+
+# kubectl exec $POD -- bash -c 'kill 7'
+
+# while true; do curl -s $CLUSTER_IP -o /dev/null && echo success || echo failure; sleep 2; done
+
+# kubectl get pods
+
+# CLUSTER_IP=10.105.9.85
+# curl -v -s $CLUSTER_IP 2>&1 | head -n 10
+# POD=$( kubectl get pod | grep web-app | awk '{print $1}' | head -1)
+# kubectl exec $POD -- bash -c 'find /proc -mindepth 2 -maxdepth 2 -name exe -exec ls -lh {} \; 2>/dev/null'
+# kubectl exec $POD -- bash -c 'kill 7'
+
+
+CLUSTER_IP=10.110.213.251
+# curl -v -s $CLUSTER_IP 2>&1 | head -n 10
+# POD=$( kubectl get pod | grep web-app1 | awk '{print $1}' | head -1)
+# kubectl exec $POD -- bash -c 'find /proc -mindepth 2 -maxdepth 2 -name exe -exec ls -lh {} \; 2>/dev/null'
+# kubectl exec $POD -- bash -c 'kill 7'
+
+curl -v -s $CLUSTER_IP 2>&1 | head -n 10
