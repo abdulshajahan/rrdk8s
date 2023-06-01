@@ -6,7 +6,7 @@ spec:
   containers:
   - image: busybox
     name: busy
-    args: [/bin/sh, -c, 'while true; do echo $(date +"%Y-%m-%d %H:%M:%S") >> /busy/index.html; sleep 1; done']
+    args: [/bin/sh, -c, 'while true; do echo $(date +"%Y-%m-%d %H:%M:%S") >> /busy/index.html; sleep 2; done']
     volumeMounts:
     - mountPath: /busy
       name: test
