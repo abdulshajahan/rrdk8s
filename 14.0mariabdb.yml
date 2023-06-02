@@ -3,7 +3,7 @@ kind: Deployment # what to create?
 metadata:
   name: mariadb-deployment
 spec: # specification for deployment resource
-  replicas: 1 # how many replicas of pods we want to create
+  replicas: 3 # how many replicas of pods we want to create
   selector:
     matchLabels:
       app: mariadb
@@ -22,13 +22,15 @@ spec: # specification for deployment resource
         - name: MARIADB_ALLOW_EMPTY_ROOT_PASSWORD
           value: "0" # if it is 1 and root_password is set, root_password takes precedance
         - name: MARIADB_ROOT_PASSWORD
+        #  value: secret
           valueFrom: 
+            #configMapKeyRef:
             secretKeyRef:
             # The ConfigMap containing the value you want to assign to SPECIAL_LEVEL_KEY
+             # name: mariadb-config
               name: mariadb-secret
-              key: password
-        # value: secret
-          
+              key: pass
 
           
   ## https://mariadb.org/start-mariadb-in-k8s/
+  #kubectl get secret my-test-secret -o go-template='{{.data}}'
