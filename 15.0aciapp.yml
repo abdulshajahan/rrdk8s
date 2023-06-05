@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aciapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aciapp
+  template:
+    metadata:
+      labels:
+        app: aciapp
+    spec:
+      nodeSelector:
+        "kubernetes.io/os": linux
+      containers:
+      - name: nginx-demos
+        #image: nginxdemos/hello
+        image: rrdcr1.azurecr.io/rrdniginxdemo:latest
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 250m
+            memory: 256Mi
+        ports:
+        - containerPort: 80
+          name: nginx
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginxservice
+spec:
+  ports:
+  - port: 80
+    name: http
+    targetPort: 80
+    protocol: TCP
+  selector:
+    app: aciapp
+#kubectl apply -f 15.0aciapp.yml
